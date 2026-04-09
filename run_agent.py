@@ -1,30 +1,22 @@
-import os
-
-from dotenv import load_dotenv
-
 from minimal_agent.agent import Agent
-from minimal_agent.tools import VisitWebpageTool, TavilySearchTool
-
-load_dotenv()
 
 
-if __name__ == "__main__":
+# 🔥 Dummy model (no API required)
+def dummy_model(prompt):
+    # super basic response
+    return "42"
+
+
+def run_agent(question):
     agent = Agent(
-        model=os.environ.get("MODEL"),
-        tools=[
-            # For this tool, make sure the TAVILY_API_KEY environment variable is set.
-            # You can get a free API key at https://tavily.com.
-            # TavilySearchTool(max_results=10),
-            # You can try DuckDuckGoSearchTool as default web search tool as it doesn't require an API key,
-            # but often errors due to rate limits. If this is a problem, uncomment this tool and use Tavily above.
-            DuckDuckGoSearchTool(max_results=10),
-            VisitWebpageTool(max_output_length=1000),
-        ],
+        model=dummy_model,
+        tools=[]  # no tools for baseline
     )
 
-    res = agent.run(
-        "What was the hottest day in 2024 and how much was the Dow Jones on that day?"
-    )
+    return agent.run(question)
 
-    print(20 * "-")
-    print(f"The final answer is:\n\n{res}")
+
+# Optional test
+if __name__ == "__main__":
+    q = "What is 25 * 17?"
+    print(run_agent(q))

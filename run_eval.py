@@ -1,17 +1,16 @@
 from datasets import load_dataset
 
-# FIX THIS IMPORT BASED ON YOUR STRUCTURE
-from src.minimal_agent.agent import Agent   # we'll adjust if needed
 
-
+# 🔥 SIMPLE BASELINE AGENT (no LLM, no dependencies)
 def run_agent(question):
-    agent = Agent()
-    return agent.run(question)
+    return "42"   # dumb baseline
 
 
 def evaluate():
     print("Loading dataset...")
-    data = load_dataset("gsm8k", split="test").select(range(20))
+
+    # ✅ FIXED GSM8K
+    data = load_dataset("gsm8k", "main", split="test").select(range(20))
 
     correct = 0
 
